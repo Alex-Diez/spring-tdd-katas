@@ -1,0 +1,39 @@
+buildscript {
+  ext {
+    springBootVersion = '1.5.9.RELEASE'
+  }
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+  }
+}
+
+allprojects {
+  group = 'ua.kata'
+  version = '1.0.0'
+}
+
+subprojects {
+  apply plugin: 'java'
+  apply plugin: 'org.springframework.boot'
+
+  sourceCompatibility = 9
+  targetCompatibility = 9
+
+  repositories {
+    mavenCentral()
+  }
+
+
+  dependencies {
+    compile('org.springframework:spring-webmvc')
+    compile('org.springframework.boot:spring-boot-starter-jersey')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    testCompile('junit:junit:4.12')
+
+    testCompile('org.assertj:assertj-core:3.9.0')
+  }
+}
