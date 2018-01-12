@@ -1,0 +1,3 @@
+rootProject.name = 'spring-tdd-katas'
+
+include ':bowling-game-kata:bowling-game-day-1'
