@@ -2,3 +2,4 @@ rootProject.name = 'spring-tdd-katas'
 
 include ':bowling-game-kata:bowling-game-day-1'
 include ':bowling-game-kata:bowling-game-day-2'
+include ':bowling-game-kata:bowling-game-day-3'
