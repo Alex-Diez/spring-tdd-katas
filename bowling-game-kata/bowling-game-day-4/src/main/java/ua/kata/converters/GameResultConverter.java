@@ -3,6 +3,7 @@ package ua.kata.converters;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
@@ -18,10 +19,12 @@ import ua.kata.model.GameResult;
 
 @Component
 public class GameResultConverter extends AbstractHttpMessageConverter<GameResult> {
-  private static final Gson GSON = new GsonBuilder().create();
+  private final Gson gson;
 
-  public GameResultConverter() {
+  @Autowired
+  public GameResultConverter(Gson gson) {
     super(MediaType.APPLICATION_JSON_UTF8);
+    this.gson = gson;
   }
 
   @Override
@@ -33,13 +36,13 @@ public class GameResultConverter extends AbstractHttpMessageConverter<GameResult
   protected GameResult readInternal(
       Class<? extends GameResult> clazz,
       HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
-    return GSON.fromJson(new InputStreamReader(inputMessage.getBody()), clazz);
+    return gson.fromJson(new InputStreamReader(inputMessage.getBody()), clazz);
   }
 
   @Override
   protected void writeInternal(
       GameResult gameResult,
       HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
-    outputMessage.getBody().write(GSON.toJson(gameResult).getBytes());
+    outputMessage.getBody().write(gson.toJson(gameResult).getBytes());
   }
 }

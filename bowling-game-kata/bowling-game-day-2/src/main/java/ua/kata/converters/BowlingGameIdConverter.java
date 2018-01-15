@@ -34,15 +34,15 @@ public class BowlingGameIdConverter extends AbstractHttpMessageConverter<Bowling
 
   @Override
   protected BowlingGameId readInternal(
-    Class<? extends BowlingGameId> clazz,
-    HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
+      Class<? extends BowlingGameId> clazz,
+      HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
     return gson.fromJson(new InputStreamReader(inputMessage.getBody()), BowlingGameId.class);
   }
 
   @Override
   protected void writeInternal(
-    BowlingGameId bowlingGameId,
-    HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
+      BowlingGameId bowlingGameId,
+      HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
     outputMessage.getBody().write(gson.toJson(bowlingGameId).getBytes());
   }
 }

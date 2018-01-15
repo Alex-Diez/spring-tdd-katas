@@ -34,15 +34,15 @@ public class GameResultConverter extends AbstractHttpMessageConverter<GameResult
 
   @Override
   protected GameResult readInternal(
-    Class<? extends GameResult> clazz,
-    HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
+      Class<? extends GameResult> clazz,
+      HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
     return gson.fromJson(new InputStreamReader(inputMessage.getBody()), GameResult.class);
   }
 
   @Override
   protected void writeInternal(
-    GameResult gameResult,
-    HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
+      GameResult gameResult,
+      HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
     outputMessage.getBody().write(gson.toJson(gameResult).getBytes());
   }
 }

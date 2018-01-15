@@ -3,6 +3,7 @@ package ua.kata.converters;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
@@ -14,32 +15,34 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import ua.kata.model.GameResult;
+import ua.kata.model.BowlingGameId;
 
 @Component
-public class GameResultConverter extends AbstractHttpMessageConverter<GameResult> {
-  private static final Gson GSON = new GsonBuilder().create();
+public class BowlingGameIdConverter extends AbstractHttpMessageConverter<BowlingGameId> {
+  private final Gson gson;
 
-  public GameResultConverter() {
+  @Autowired
+  public BowlingGameIdConverter(Gson gson) {
     super(MediaType.APPLICATION_JSON_UTF8);
+    this.gson = gson;
   }
 
   @Override
   protected boolean supports(Class<?> clazz) {
-    return clazz.equals(GameResult.class);
+    return clazz.equals(BowlingGameId.class);
   }
 
   @Override
-  protected GameResult readInternal(
-      Class<? extends GameResult> clazz,
+  protected BowlingGameId readInternal(
+      Class<? extends BowlingGameId> clazz,
       HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
-    return GSON.fromJson(new InputStreamReader(inputMessage.getBody()), clazz);
+    return gson.fromJson(new InputStreamReader(inputMessage.getBody()), clazz);
   }
 
   @Override
   protected void writeInternal(
-      GameResult gameResult,
+      BowlingGameId bowlingGameId,
       HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
-    outputMessage.getBody().write(GSON.toJson(gameResult).getBytes());
+    outputMessage.getBody().write(gson.toJson(bowlingGameId).getBytes());
   }
 }
