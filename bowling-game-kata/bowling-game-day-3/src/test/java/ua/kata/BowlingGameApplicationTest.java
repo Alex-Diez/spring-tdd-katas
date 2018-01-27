@@ -1,12 +1,12 @@
 package ua.kata;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -16,9 +16,9 @@ import ua.kata.model.GameResult;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class BowlingGameApplicationTest {
+class BowlingGameApplicationTest {
   @Autowired
   private TestRestTemplate restTemplate;
 
@@ -35,14 +35,14 @@ public class BowlingGameApplicationTest {
   }
 
   @Test
-  public void startNewGame() throws Exception {
+  void startNewGame() throws Exception {
     BowlingGameId gameId = sendRequestToCreateNewGame();
 
     assertThat(gameId).isNotNull();
   }
 
   @Test
-  public void playerCanFinishTheGame() throws Exception {
+  void playerCanFinishTheGame() throws Exception {
     BowlingGameId gameId = sendRequestToCreateNewGame();
 
     for (int i = 0; i < 20; i++) {
@@ -53,7 +53,7 @@ public class BowlingGameApplicationTest {
   }
 
   @Test
-  public void twoGames_canBePlayedAtTheSameTime() throws Exception {
+  void twoGames_canBePlayedAtTheSameTime() throws Exception {
     BowlingGameId firstGame = sendRequestToCreateNewGame();
     BowlingGameId secondGame = sendRequestToCreateNewGame();
 

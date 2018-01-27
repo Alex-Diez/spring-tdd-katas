@@ -1,12 +1,12 @@
 package ua.kata.controller;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -19,9 +19,9 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(BowlingGameController.class)
-public class BowlingGameControllerTest {
+class BowlingGameControllerTest {
 
   @Autowired
   private MockMvc mockMvc;
@@ -30,8 +30,8 @@ public class BowlingGameControllerTest {
   private BowlingGameService service;
   private BowlingGameId gameId;
 
-  @Before
-  public void setUp() throws Exception {
+  @BeforeEach
+  void setUp() throws Exception {
     gameId = BowlingGameId.generate();
     BowlingGame game = BowlingGame.newGameWith(gameId);
     given(service.createGame()).willReturn(game);
@@ -43,14 +43,14 @@ public class BowlingGameControllerTest {
   }
 
   @Test
-  public void createNewGame() throws Exception {
+  void createNewGame() throws Exception {
     requestNewGame()
         .andExpect(status().isOk())
         .andExpect(jsonPath("id").value(gameId.toString()));
   }
 
   @Test
-  public void roll_aBall() throws Exception {
+  void roll_aBall() throws Exception {
     requestNewGame();
 
     mockMvc.perform(MockMvcRequestBuilders.post("/roll/" + gameId + "/" + 5))
@@ -58,7 +58,7 @@ public class BowlingGameControllerTest {
   }
 
   @Test
-  public void requestGameResult() throws Exception {
+  void requestGameResult() throws Exception {
     requestNewGame();
 
     mockMvc.perform(MockMvcRequestBuilders.post("/roll/" + gameId + "/" + 5));

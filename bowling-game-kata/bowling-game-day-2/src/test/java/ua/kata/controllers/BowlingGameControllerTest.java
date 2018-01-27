@@ -1,12 +1,12 @@
 package ua.kata.controllers;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -18,9 +18,9 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(BowlingGameController.class)
-public class BowlingGameControllerTest {
+class BowlingGameControllerTest {
   private static final BowlingGameId GAME_ID = BowlingGameId.from(1);
   private static final int DEFAULT_PIN = 0;
 
@@ -30,8 +30,8 @@ public class BowlingGameControllerTest {
   @MockBean
   private BowlingGameService service;
 
-  @Before
-  public void setUp() throws Exception {
+  @BeforeEach
+  void setUp() throws Exception {
     BowlingGame game = BowlingGame.newGameWith(GAME_ID);
     given(service.startNewGame()).willReturn(game);
     given(service.findGameById(GAME_ID)).willReturn(game);
@@ -39,13 +39,13 @@ public class BowlingGameControllerTest {
   }
 
   @Test
-  public void roll_aBall() throws Exception {
+  void roll_aBall() throws Exception {
     mockMvc.perform(MockMvcRequestBuilders.post("/roll/" + GAME_ID + "/" + DEFAULT_PIN))
       .andExpect(status().isOk());
   }
 
   @Test
-  public void requestGameResult() throws Exception {
+  void requestGameResult() throws Exception {
     mockMvc.perform(MockMvcRequestBuilders.get("/game-score/" + GAME_ID))
       .andExpect(status().isOk())
       .andExpect(jsonPath("score").value("0"));

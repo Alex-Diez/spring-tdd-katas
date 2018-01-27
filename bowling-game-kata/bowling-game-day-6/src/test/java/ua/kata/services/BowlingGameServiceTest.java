@@ -1,15 +1,15 @@
 package ua.kata.services;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import ua.kata.model.BowlingGame;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BowlingGameServiceTest {
+class BowlingGameServiceTest {
 
   @Test
-  public void createNewGame_eachTimeWhenRequested() throws Exception {
+  void createNewGame_eachTimeWhenRequested() throws Exception {
     BowlingGameService service = new BowlingGameService();
 
     BowlingGame game = service.createGame();
@@ -18,7 +18,7 @@ public class BowlingGameServiceTest {
   }
 
   @Test
-  public void returnTheSameGame_whenRequestedFindById() throws Exception {
+  void returnTheSameGame_whenRequestedFindById() throws Exception {
     BowlingGameService service = new BowlingGameService();
 
     BowlingGame game = service.createGame();

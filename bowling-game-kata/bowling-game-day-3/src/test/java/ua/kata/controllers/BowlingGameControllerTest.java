@@ -1,12 +1,12 @@
 package ua.kata.controllers;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -18,9 +18,9 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(BowlingGameController.class)
-public class BowlingGameControllerTest {
+class BowlingGameControllerTest {
   @Autowired
   private MockMvc mockMvc;
 
@@ -29,8 +29,8 @@ public class BowlingGameControllerTest {
 
   private BowlingGameId id;
 
-  @Before
-  public void createGame() throws Exception {
+  @BeforeEach
+  void createGame() throws Exception {
     id = BowlingGameId.next();
     BowlingGame game = BowlingGame.newGameWith(id);
     given(service.createGame()).willReturn(game);
@@ -40,13 +40,13 @@ public class BowlingGameControllerTest {
   }
 
   @Test
-  public void roll_aBall() throws Exception {
+  void roll_aBall() throws Exception {
     mockMvc.perform(MockMvcRequestBuilders.post("/roll/" + id + "/" + 0))
       .andExpect(status().isOk());
   }
 
   @Test
-  public void requestGameById() throws Exception {
+  void requestGameById() throws Exception {
     int roll = 5;
 
     mockMvc.perform(MockMvcRequestBuilders.post("/roll/" + id + "/" + roll));

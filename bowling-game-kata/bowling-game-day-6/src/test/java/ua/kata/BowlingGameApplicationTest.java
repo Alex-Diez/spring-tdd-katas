@@ -1,11 +1,11 @@
 package ua.kata;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ua.kata.model.BowlingGameId;
 import ua.kata.model.GameResult;
@@ -14,9 +14,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-public class BowlingGameApplicationTest {
+class BowlingGameApplicationTest {
   @Autowired
   private TestRestTemplate restTemplate;
 
@@ -33,12 +33,12 @@ public class BowlingGameApplicationTest {
   }
 
   @Test
-  public void requestToStartNewGame() throws Exception {
+  void requestToStartNewGame() throws Exception {
     assertThat(makeRequestToCreateGame()).isNotNull();
   }
 
   @Test
-  public void gameCanBeFinished() throws Exception {
+  void gameCanBeFinished() throws Exception {
     BowlingGameId gameId = makeRequestToCreateGame();
 
     for (int i = 0; i < 20; i++) {
@@ -50,7 +50,7 @@ public class BowlingGameApplicationTest {
   }
 
   @Test
-  public void twoGamesCanBePlayedInParallel() throws Exception {
+  void twoGamesCanBePlayedInParallel() throws Exception {
     BowlingGameId gameId = makeRequestToCreateGame();
     BowlingGameId theOtherGameId = makeRequestToCreateGame();
 

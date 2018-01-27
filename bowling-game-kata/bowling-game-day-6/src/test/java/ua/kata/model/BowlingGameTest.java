@@ -1,17 +1,16 @@
 package ua.kata.model;
 
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BowlingGameTest {
+class BowlingGameTest {
 
   private BowlingGame game;
 
-  @Before
-  public void setUp() throws Exception {
+  @BeforeEach
+  void setUp() throws Exception {
     game = BowlingGame.newGameWith(BowlingGameId.generate());
   }
 
@@ -31,21 +30,21 @@ public class BowlingGameTest {
   }
 
   @Test
-  public void gutterGame() throws Exception {
+  void gutterGame() throws Exception {
     rollMany(20, 0);
 
     assertThat(game.score()).isEqualTo(GameResult.withScore(0));
   }
 
   @Test
-  public void allOnes() throws Exception {
+  void allOnes() throws Exception {
     rollMany(20, 1);
 
     assertThat(game.score()).isEqualTo(GameResult.withScore(20));
   }
 
   @Test
-  public void oneSpare() throws Exception {
+  void oneSpare() throws Exception {
     rollSpare();
     game.roll(3);
     rollMany(17, 0);
@@ -54,7 +53,7 @@ public class BowlingGameTest {
   }
 
   @Test
-  public void oneStrike() throws Exception {
+  void oneStrike() throws Exception {
     rollStrike();
     game.roll(4);
     game.roll(3);
@@ -64,7 +63,7 @@ public class BowlingGameTest {
   }
 
   @Test
-  public void perfectGame() throws Exception {
+  void perfectGame() throws Exception {
     rollMany(12, 10);
 
     assertThat(game.score()).isEqualTo(GameResult.withScore(300));

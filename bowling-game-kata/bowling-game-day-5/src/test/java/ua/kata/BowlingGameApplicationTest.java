@@ -1,29 +1,29 @@
 package ua.kata;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ua.kata.model.BowlingGameId;
 import ua.kata.model.GameResult;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class BowlingGameApplicationTest {
+class BowlingGameApplicationTest {
 
   @Autowired
   private TestRestTemplate restTemplate;
   private BowlingGameId gameId;
 
-  @Before
-  public void setUp() throws Exception {
+  @BeforeEach
+  void setUp() throws Exception {
     gameId = requestNewGameCreation();
   }
 
@@ -40,12 +40,12 @@ public class BowlingGameApplicationTest {
   }
 
   @Test
-  public void createNewGame() throws Exception {
+  void createNewGame() throws Exception {
     assertThat(gameId).isNotNull();
   }
 
   @Test
-  public void gameCanBeFinished() throws Exception {
+  void gameCanBeFinished() throws Exception {
     for (int i = 0; i < 20; i++) {
       rollBall(gameId, i % 5);
     }
@@ -54,7 +54,7 @@ public class BowlingGameApplicationTest {
   }
 
   @Test
-  public void twoGameCanBePlayed_inParallel() throws Exception {
+  void twoGameCanBePlayed_inParallel() throws Exception {
     BowlingGameId theOtherGameId = requestNewGameCreation();
 
     for (int i = 0; i < 20; i++) {
